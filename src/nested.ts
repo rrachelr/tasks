@@ -215,9 +215,14 @@ export function changeQuestionTypeById(
     );
     deepCopy[i].type = newQuestionType;
     newQuestionType === "short_answer_question"
-        ? (deepCopy[i].options = [])
+        ? helper(deepCopy, i)
         : deepCopy;
     return deepCopy;
+}
+
+export function helper(copy: Question[], index: number): Question[] {
+    copy[index].options = [];
+    return copy;
 }
 
 /**
@@ -246,7 +251,7 @@ export function editOption(
         })
     );
     targetOptionIndex === -1
-        ? (deepCopy[i].options = [...deepCopy[i].options, newOption])
+        ? deepCopy[i].options.push(newOption)
         : deepCopy[i].options.splice(targetOptionIndex, 1, newOption);
     return deepCopy;
 }
